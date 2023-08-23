@@ -35,7 +35,7 @@ BEGIN
                 ), 4326)
             ) INTO gm_line;
         -- RAISE NOTICE 'line:%', ST_AsGeoJSON(gm_line);
-        SELECT ST_Intersection(gm_polygon, gm_line) INTO gm_intersection;
+        SELECT ST_Intersection(ST_Buffer(gm_polygon, 0), gm_line) INTO gm_intersection;
         -- RAISE NOTICE 'intersection(line): %', ST_AsGeoJSON(gm_intersection);
         IF ST_NPoints(gm_intersection) = 0
             OR ST_Length(ST_GeometryN(gm_intersection, 1)::geography) < 1.0e-3 THEN
